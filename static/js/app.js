@@ -61,7 +61,7 @@ function buildCharts(sample) {
       marker: {
         size: sampleValues,
         color: otuIds,
-        colorscale: 'Earth',
+        colorscale: 'Jet',
         showscale: true
       }
     }
@@ -72,7 +72,7 @@ function buildCharts(sample) {
       xaxis: { title: `OTU ID` },
       yaxis: { title: `Number of Bacteria` },
       showlegend: false,
-      height: 800,
+      height: 600,
       width: 1200
     };
 
@@ -87,15 +87,14 @@ function buildCharts(sample) {
     const top_sample = sampleId.sample_values.slice(0, 10).reverse()
     const top_labels = sampleId.otu_labels.slice(0, 10).reverse()
     // Build a Bar Chart
-    // Don't forget to slice and reverse the input data appropriately
     const yticks = topOtu.map(Id => `OTU ${Id}`);
 
     let trace1 = {
-      y: yticks,
-      x: top_sample,
+      y: top_sample,
+      x: yticks,
       text: top_labels,
       type: "bar",
-      orientation: 'h'
+      orientation: 'v'
     }
     let data2 = [trace1]
 
@@ -104,7 +103,7 @@ function buildCharts(sample) {
       title: "Top Ten Bacteria Cultures Found",
       xaxis: { title: `Number of Bacteria` },
       showlegend: false,
-      height: 500,
+      height: 600,
       width: 900
     };
     Plotly.newPlot("bar", data2, layout);
@@ -127,8 +126,6 @@ function init() {
     console.log(dropdown)
 
     // Use the list of sample names to populate the select options
-    // Hint: Inside a loop, you will need to use d3 to append a new
-    // option for each sample name.
     for (let i = 0; i < names.length; i++) {
       dropdown.append('option').text(names[i])
       console.log(`dropdown`)
